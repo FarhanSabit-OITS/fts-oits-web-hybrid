@@ -159,7 +159,7 @@ DIRECTIONS:
           {/* Header */}
           <div className="bg-slate-900 dark:bg-blue-600 p-4 text-white flex items-center justify-between shadow-lg relative z-10">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-500 dark:bg-slate-950/50 rounded-lg flex items-center justify-center border border-white/10">
+              <div className="w-8 h-8 bg-blue-500 dark:bg-swiss-black/60 rounded-lg flex items-center justify-center border border-white/10">
                 <Sparkles size={16} />
               </div>
               <div>
@@ -194,7 +194,7 @@ DIRECTIONS:
           )}
 
           {/* Messages */}
-          <div ref={scrollRef} className="h-96 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/50 scroll-smooth">
+          <div ref={scrollRef} className="h-96 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-swiss-black/40 scroll-smooth">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] flex gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>

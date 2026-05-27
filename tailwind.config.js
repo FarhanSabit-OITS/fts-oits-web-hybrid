@@ -5,6 +5,16 @@ module.exports = {
     "./**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
+  safelist: [
+    {
+      pattern: /bg-swiss-(black|white|muted|accent)/,
+      variants: ['dark', 'dark/95', 'dark/60', 'dark/40', 'dark/30'],
+    },
+    'dark:bg-swiss-black',
+    'dark:bg-swiss-black/95',
+    'dark:bg-swiss-black/60',
+    'dark:bg-swiss-black/40',
+  ],
   theme: {
     extend: {
       fontFamily: {

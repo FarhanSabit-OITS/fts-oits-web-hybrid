@@ -11,7 +11,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -51,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-3 shadow-lg' 
+          ? 'bg-white/95 dark:bg-swiss-black/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-3 shadow-lg' 
           : 'bg-transparent py-5'
       }`}
       role="banner"
@@ -80,36 +79,26 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               </Link>
             </li>
 
-            {/* Services Dropdown Menu Item */}
-            <li className="relative group/dropdown">
-              <button 
-                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 flex items-center gap-1.5 ${
-                  isActive('/services') || isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+            <li>
+              <Link 
+                to="/services"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 ${
+                  isActive('/services') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
                 }`}
               >
-                <span>Services</span>
-                <ChevronDown size={14} className="group-hover/dropdown:rotate-180 transition-transform duration-300" />
-              </button>
-              
-              {/* Dropdown Box */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-2 opacity-0 scale-95 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 origin-top z-50">
-                <Link 
-                  to="/services"
-                  className={`block px-4 py-3 text-xs font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${
-                    isActive('/services') ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-slate-800/50' : 'text-slate-700 dark:text-slate-300'
-                  }`}
-                >
-                  Services Home
-                </Link>
-                <Link 
-                  to="/workflow"
-                  className={`block px-4 py-3 text-xs font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${
-                    isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-slate-800/50' : 'text-slate-700 dark:text-slate-300'
-                  }`}
-                >
-                  Agile Workflow
-                </Link>
-              </div>
+                Services
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/workflow"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 ${
+                  isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                Workflow
+              </Link>
             </li>
 
             <li>
@@ -183,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       {isMobileMenuOpen && (
         <div 
           id="mobile-navigation"
-          className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-2 duration-300 overflow-y-auto max-h-[85vh] no-scrollbar"
+          className="absolute top-full left-0 right-0 bg-white dark:bg-swiss-black border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-2 duration-300 overflow-y-auto max-h-[85vh] no-scrollbar"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation overlay"
@@ -202,39 +191,28 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 </Link>
               </li>
 
-              {/* Mobile Services Accordion */}
               <li>
-                <button 
-                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                  className="w-full px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 flex items-center justify-between text-left text-slate-800 dark:text-slate-100"
+                <Link 
+                  to="/services"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/services') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
                 >
-                  <span>Services</span>
-                  <ChevronDown size={18} className={`transition-transform duration-300 ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {/* Accordion Sub-list */}
-                <div className={`pl-6 overflow-hidden transition-all duration-300 ${
-                  isMobileServicesOpen ? 'max-h-40 opacity-100 py-1' : 'max-h-0 opacity-0 pointer-events-none'
-                }`}>
-                  <Link 
-                    to="/services"
-                    onClick={() => { setIsMobileMenuOpen(false); }}
-                    className={`block px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all ${
-                      isActive('/services') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300'
-                    }`}
-                  >
-                    Services Home
-                  </Link>
-                  <Link 
-                    to="/workflow"
-                    onClick={() => { setIsMobileMenuOpen(false); }}
-                    className={`block px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all ${
-                      isActive('/workflow') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300'
-                    }`}
-                  >
-                    Agile Workflow
-                  </Link>
-                </div>
+                  Services
+                </Link>
+              </li>
+
+              <li>
+                <Link 
+                  to="/workflow"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
+                >
+                  Workflow
+                </Link>
               </li>
 
               <li>

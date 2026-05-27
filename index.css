@@ -2,9 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Swiss-Black Dark Mode Utilities ──────────────────────────────────────
+   Explicitly defined so they are ALWAYS included in the CSS bundle,
+   bypassing any Tailwind JIT content-scan gaps for custom color dark variants.
+   ──────────────────────────────────────────────────────────────────────── */
+.dark .dark\:bg-swiss-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 10 10 / var(--tw-bg-opacity));
+}
+.dark .dark\:bg-swiss-black\/95 {
+  background-color: rgb(10 10 10 / 0.95);
+}
+.dark .dark\:bg-swiss-black\/60 {
+  background-color: rgb(10 10 10 / 0.60);
+}
+.dark .dark\:bg-swiss-black\/40 {
+  background-color: rgb(10 10 10 / 0.40);
+}
+.dark .dark\:bg-swiss-black\/30 {
+  background-color: rgb(10 10 10 / 0.30);
+}
+.bg-swiss-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 10 10 / var(--tw-bg-opacity));
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-swiss-accent selection:text-white overflow-x-hidden;
+    @apply bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-swiss-accent selection:text-white overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
   }
 

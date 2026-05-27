@@ -98,7 +98,7 @@ export const Services: React.FC = () => {
     <section
       ref={sectionRef}
       id={SectionId.SERVICES}
-      className="py-32 bg-white dark:bg-slate-950 relative transition-colors duration-300 overflow-hidden"
+      className="py-32 bg-white dark:bg-swiss-black relative transition-colors duration-300 overflow-hidden"
     >
       <div className="container mx-auto px-6">
 
@@ -244,7 +244,7 @@ export const Services: React.FC = () => {
                     {domain.skills.map((skill) => (
                       <div
                         key={skill}
-                        className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-500 group cursor-default hover:bg-blue-600 hover:text-white hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20 dark:hover:shadow-blue-900/30 transform-gpu will-change-transform"
+                        className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 transition-all duration-500 group cursor-default hover:bg-blue-600 hover:text-white hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20 dark:hover:shadow-blue-900/30 transform-gpu will-change-transform"
                       >
                         <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-blue-600 transition-all shadow-md group-hover:scale-110 group-hover:rotate-6">
                           <Terminal size={18} className="sm:w-5 sm:h-5" />
@@ -296,7 +296,7 @@ export const Services: React.FC = () => {
                     {domain.skills.map((skill) => (
                       <div
                         key={skill}
-                        className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-all duration-500 group cursor-default hover:bg-blue-600 hover:text-white transform-gpu"
+                        className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 transition-all duration-500 group cursor-default hover:bg-blue-600 hover:text-white transform-gpu"
                       >
                         <div className="w-10 h-10 shrink-0 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-blue-600 transition-all shadow-md">
                           <Terminal size={16} />

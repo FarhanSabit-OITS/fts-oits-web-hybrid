@@ -246,6 +246,62 @@ export const PROJECTS: Project[] = [
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     duration: '6 Months',
     status: 'In Progress'
+  },
+  {
+    id: '4',
+    title: 'Retail POS System',
+    category: 'Enterprise Software',
+    imageUrl: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&q=80&w=1200',
+    description: 'Next-gen cloud POS with offline-first synchronization.',
+    fullDescription: 'A robust retail management suite that synchronizes inventory across hundreds of locations while maintaining high speed at checkout.',
+    problemStatement: 'Existing POS systems were slow during peak hours and completely non-functional during internet outages.',
+    technicalApproach: 'Built a local-first architecture using Vue.js and IndexedDB, with a Rust-based backend for high-speed central synchronization and real-time concurrency.',
+    results: 'Zero downtime recorded during peak holiday seasons and a 20% increase in transaction speed.',
+    technologies: ['Vue.js', 'Rust'],
+    duration: '4 Months',
+    status: 'Completed'
+  },
+  {
+    id: '5',
+    title: 'EduTrack LMS',
+    category: 'Web Application',
+    imageUrl: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1200',
+    description: 'Modular learning system with real-time engagement tracking.',
+    fullDescription: 'EduTrack redefines the digital classroom with modular course builders and real-time student engagement tracking.',
+    problemStatement: 'Universities needed a system that could handle sudden spikes in traffic during exam periods without compromising user experience.',
+    technicalApproach: 'Leveraged NestJS with horizontal scaling on Kubernetes to ensure high availability and PostgreSQL for robust academic record management.',
+    results: 'Successfully hosted 10,000+ simultaneous users during final exam weeks with zero performance degradation.',
+    technologies: ['React', 'NestJS', 'PostgreSQL'],
+    duration: '5-6 Months',
+    status: 'Completed'
+  },
+  {
+    id: '6',
+    title: 'TravelGo Mobile',
+    category: 'Mobile Application',
+    imageUrl: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=1200',
+    description: 'Personalized travel companion with real-time group planning.',
+    fullDescription: 'A travel app focused on discovery, allowing users to plan, book, and share their itineraries in a single elegant interface.',
+    problemStatement: 'Travelers often find it difficult to coordinate group trips and access plans in areas with poor internet connectivity.',
+    technicalApproach: 'Built with React Native for high-performance cross-platform UI and GraphQL for efficient, low-bandwidth data fetching.',
+    results: 'Top-rated travel app on both App Store and Play Store within 3 months of launch, with 100k+ active users.',
+    technologies: ['React Native', 'TypeScript', 'GraphQL'],
+    duration: '3 Months',
+    status: 'In Progress'
+  },
+  {
+    id: '7',
+    title: 'SecurePay Gateway',
+    category: 'SaaS Platform',
+    imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200',
+    description: 'High-security payment orchestration with fraud detection.',
+    fullDescription: 'SecurePay provides developers with a robust API to manage complex global payments while ensuring total PCI-DSS compliance.',
+    problemStatement: 'E-commerce platforms were losing significant revenue due to high transaction failure rates in cross-border payments.',
+    technicalApproach: 'Implemented a multi-gateway routing algorithm in Node.js to dynamically choose the best path for every transaction.',
+    results: 'Increased international payment success rate by 18% and reduced fraud incidents by 60%.',
+    technologies: ['Node.js', 'Kubernetes', 'AWS'],
+    duration: '6-8 Months',
+    status: 'Maintenance'
   }
 ];
 
@@ -302,6 +358,78 @@ export const UNIFIED_PORTFOLIO: PortfolioItem[] = [
     links: {
       demo: "https://demo.oitsdhaka.com/logistics",
       caseStudy: "/portfolio/global-logistics"
+    }
+  },
+  {
+    id: "retail-pos",
+    title: "Retail POS System",
+    description: "Next-gen cloud POS with offline-first synchronization.",
+    category: "ENTERPRISE SOFTWARE",
+    status: "COMPLETED",
+    duration: "4 MONTHS",
+    tags: ["Vue.js", "Rust"],
+    media: {
+      webm: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      mp4: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      poster: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&q=80&w=1200"
+    },
+    links: {
+      demo: "https://demo.oitsdhaka.com/pos",
+      caseStudy: "/portfolio/retail-pos-system"
+    }
+  },
+  {
+    id: "edutrack-lms",
+    title: "EduTrack LMS",
+    description: "Modular learning system with real-time engagement tracking.",
+    category: "WEB APPLICATION",
+    status: "COMPLETED",
+    duration: "5-6 MONTHS",
+    tags: ["React", "NestJS", "PostgreSQL"],
+    media: {
+      webm: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      mp4: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      poster: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1200"
+    },
+    links: {
+      demo: "https://demo.oitsdhaka.com/edutrack",
+      caseStudy: "/portfolio/edutrack-lms"
+    }
+  },
+  {
+    id: "travelgo-mobile",
+    title: "TravelGo Mobile",
+    description: "Personalized travel companion with real-time group planning.",
+    category: "MOBILE APPLICATION",
+    status: "IN_PROGRESS",
+    duration: "3 MONTHS",
+    tags: ["React Native", "TypeScript", "GraphQL"],
+    media: {
+      webm: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      mp4: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      poster: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=1200"
+    },
+    links: {
+      demo: "https://demo.oitsdhaka.com/travelgo",
+      caseStudy: "/portfolio/travelgo-mobile"
+    }
+  },
+  {
+    id: "securepay-gateway",
+    title: "SecurePay Gateway",
+    description: "High-security payment orchestration with fraud detection.",
+    category: "SaaS PLATFORM",
+    status: "MAINTENANCE",
+    duration: "6-8 MONTHS",
+    tags: ["Node.js", "Kubernetes", "AWS"],
+    media: {
+      webm: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      mp4: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      poster: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200"
+    },
+    links: {
+      demo: "https://demo.oitsdhaka.com/securepay",
+      caseStudy: "/portfolio/securepay-gateway"
     }
   }
 ];

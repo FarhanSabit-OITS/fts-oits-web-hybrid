@@ -72,7 +72,7 @@ export const Hero: React.FC = () => {
   const prevTestimonial = () => setActiveTestimonialIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
 
   return (
-    <section id={SectionId.HOME} className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+    <section id={SectionId.HOME} className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-slate-50 dark:bg-swiss-black transition-colors duration-500">
       
       {/* Optimized Parallax Background Image */}
       <div 
@@ -226,7 +226,7 @@ export const Hero: React.FC = () => {
                 variant="outline" 
                 size="lg" 
                 onClick={scrollToContact} 
-                className="w-full sm:w-auto relative z-20 font-black tracking-widest text-sm md:text-base bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-slate-300 dark:border-slate-600 text-slate-950 dark:text-white hover:bg-white dark:hover:bg-slate-800 shadow-lg"
+                className="w-full sm:w-auto relative z-20 font-black tracking-widest text-sm md:text-base bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-slate-300 dark:border-slate-600 text-slate-950 dark:text-white hover:bg-white dark:hover:bg-slate-800 shadow-lg"
                 aria-label="Request a demo consultation"
               >
                 Request Demo

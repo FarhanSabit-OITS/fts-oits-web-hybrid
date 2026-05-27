@@ -53,10 +53,8 @@ export const Contact: React.FC = () => {
     }, 2500);
   };
 
-  const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.123456789012!2d90.3644321!3d23.7431234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ0JzM1LjIiTiA5MMKwMjEnNTEuOSJF!5e0!3m2!1sen!2sbd!4v1234567890123`;
-
   return (
-    <section ref={sectionRef} id={SectionId.CONTACT} className="py-24 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-500 relative overflow-hidden">
+    <section ref={sectionRef} id={SectionId.CONTACT} className="py-24 bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-white transition-colors duration-500 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[45%] h-full bg-blue-100/40 dark:bg-blue-900/5 -skew-x-12 transform translate-x-1/4 pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 xl:gap-32 items-start mb-24">
@@ -87,20 +85,7 @@ export const Contact: React.FC = () => {
                  </div>
               </div>
  
-               {/* Embedded Map */}
-              <div className="w-full h-64 md:h-80 rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-800 shadow-xl mt-6">
-                <iframe 
-                   src={mapUrl} 
-                   width="100%" 
-                   height="100%" 
-                   style={{ border: 0 }} 
-                   allowFullScreen 
-                   loading="lazy" 
-                   referrerPolicy="no-referrer-when-downgrade"
-                   title="OITS Dhaka Location"
-                   className="grayscale hover:grayscale-0 transition-all duration-700"
-                />
-              </div>
+
             </div>
           </div>
  
@@ -146,7 +131,7 @@ export const Contact: React.FC = () => {
                         autoComplete="name"
                         aria-invalid={!!errors.name} 
                         aria-describedby={errors.name ? 'name-error' : undefined}
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border-2 ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-600 focus:border-blue-600'} rounded-2xl px-7 py-5 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600`} 
+                        className={`w-full bg-slate-50 dark:bg-slate-900 border-2 ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-700 focus:border-blue-600'} rounded-2xl px-7 py-5 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-500`} 
                         placeholder="John Doe" 
                         value={formData.name} 
                         onChange={(e) => setFormData({...formData, name: e.target.value})} 
@@ -166,7 +151,7 @@ export const Contact: React.FC = () => {
                         autoComplete="email"
                         aria-invalid={!!errors.email} 
                         aria-describedby={errors.email ? 'email-error' : undefined}
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border-2 ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-600 focus:border-blue-600'} rounded-2xl px-7 py-5 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600`} 
+                        className={`w-full bg-slate-50 dark:bg-slate-900 border-2 ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-700 focus:border-blue-600'} rounded-2xl px-7 py-5 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-500`} 
                         placeholder="ceo@company.com" 
                         value={formData.email} 
                         onChange={(e) => setFormData({...formData, email: e.target.value})} 
@@ -186,7 +171,7 @@ export const Contact: React.FC = () => {
                       aria-invalid={!!errors.message} 
                       aria-describedby={errors.message ? 'message-error' : undefined}
                       rows={5} 
-                      className={`w-full bg-slate-50 dark:bg-slate-950 border-2 ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-600 focus:border-blue-600'} rounded-[2.5rem] px-7 py-6 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all resize-none font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600`} 
+                      className={`w-full bg-slate-50 dark:bg-slate-900 border-2 ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-slate-400 dark:border-slate-700 focus:border-blue-600'} rounded-[2.5rem] px-7 py-6 text-slate-950 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition-all resize-none font-bold shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-500`} 
                       placeholder="What are we building?" 
                       value={formData.message} 
                       onChange={(e) => setFormData({...formData, message: e.target.value})} 
@@ -223,7 +208,6 @@ export const Contact: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
     </section>
   );
 };
