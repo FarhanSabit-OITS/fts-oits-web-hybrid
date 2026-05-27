@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-swiss-black/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-900 py-3 shadow-lg' 
+          ? 'bg-white/95 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-3 shadow-lg' 
           : 'bg-transparent py-5'
       }`}
       role="banner"
@@ -92,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               </button>
               
               {/* Dropdown Box */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl bg-white dark:bg-swiss-black border border-slate-200 dark:border-slate-900 shadow-2xl p-2 opacity-0 scale-95 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 origin-top z-50">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-2 opacity-0 scale-95 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 origin-top z-50">
                 <Link 
                   to="/services"
                   className={`block px-4 py-3 text-xs font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${

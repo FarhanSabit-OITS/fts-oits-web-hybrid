@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-swiss-white font-sans antialiased selection:bg-swiss-accent selection:text-white overflow-x-hidden;
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-swiss-accent selection:text-white overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
   }
 

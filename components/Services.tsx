@@ -98,7 +98,7 @@ export const Services: React.FC = () => {
     <section
       ref={sectionRef}
       id={SectionId.SERVICES}
-      className="py-32 bg-white dark:bg-swiss-black relative transition-colors duration-300 overflow-hidden"
+      className="py-32 bg-white dark:bg-slate-950 relative transition-colors duration-300 overflow-hidden"
     >
       <div className="container mx-auto px-6">
 

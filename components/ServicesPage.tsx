@@ -15,12 +15,12 @@ interface ServicesPageProps {
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({ theme, toggleTheme }) => {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-swiss-white selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
       <Header theme={theme} toggleTheme={toggleTheme} />
       
       <main className="pt-32">
         {/* Editorial Sub-Hero Header */}
-        <section className="border-b border-slate-200 dark:border-slate-900 bg-white dark:bg-swiss-black py-20 relative overflow-hidden transition-colors duration-300">
+        <section className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-20 relative overflow-hidden transition-colors duration-300">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl space-y-6">
@@ -53,13 +53,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ theme, toggleTheme }
         <Testimonials />
 
         {/* Editorial CTA Section */}
-        <section className="py-24 border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-swiss-black transition-colors duration-300">
+        <section className="py-24 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors duration-300">
           <div className="container mx-auto px-6 text-center space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <h2 className="text-sm font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">// START YOUR METRICS DISRUPTION</h2>
             <h3 className="text-4xl md:text-6xl font-black text-slate-950 dark:text-white tracking-tighter leading-tight max-w-4xl mx-auto">
               Ready to build something uncompromisingly fast?
             </h3>
-            <p className="text-slate-600 dark:text-swiss-muted max-w-xl mx-auto font-medium text-base sm:text-lg">
+            <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto font-medium text-base sm:text-lg">
               Get in touch with our engineering strategists today for a free architecture review and roadmap.
             </p>
             <div className="pt-4">

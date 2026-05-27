@@ -72,7 +72,7 @@ export const About: React.FC = () => {
   }, []);
 
   return (
-    <section id={SectionId.ABOUT} className="py-24 bg-white dark:bg-swiss-black transition-colors duration-300">
+    <section id={SectionId.ABOUT} className="py-24 bg-white dark:bg-slate-900 transition-colors duration-300">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">
           

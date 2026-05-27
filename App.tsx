@@ -130,7 +130,7 @@ function App() {
         <Route
           path="*"
           element={
-            <div className="min-h-screen bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-swiss-white selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
               <Header theme={theme} toggleTheme={toggleTheme} />
               <main>
                 <Hero />

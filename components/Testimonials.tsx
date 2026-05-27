@@ -25,7 +25,7 @@ export const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white dark:bg-swiss-black overflow-hidden transition-colors duration-300">
+    <section ref={sectionRef} className="py-24 bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6">
         <div className={`flex flex-col md:flex-row items-end justify-between mb-16 gap-6 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <div>

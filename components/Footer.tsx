@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
   ];
 
   return (
-    <footer className="bg-slate-950 dark:bg-swiss-black text-slate-300 py-16 border-t border-slate-900" role="contentinfo" aria-label="Site information">
+    <footer className="bg-slate-950 text-slate-300 py-16 border-t border-slate-900" role="contentinfo" aria-label="Site information">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           

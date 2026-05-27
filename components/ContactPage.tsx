@@ -13,12 +13,12 @@ interface ContactPageProps {
 
 export const ContactPage: React.FC<ContactPageProps> = ({ theme, toggleTheme }) => {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-swiss-black text-slate-900 dark:text-swiss-white selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
       <Header theme={theme} toggleTheme={toggleTheme} />
       
       <main className="pt-32">
         {/* Editorial Sub-Hero Header */}
-        <section className="border-b border-slate-200 dark:border-slate-900 bg-white dark:bg-swiss-black py-20 relative overflow-hidden transition-colors duration-300">
+        <section className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-20 relative overflow-hidden transition-colors duration-300">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl space-y-6">
