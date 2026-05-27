@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Facebook, Sun, Moon, MapPin } from 'lucide-react';
-import { COMPANY_NAME, NAV_ITEMS, SERVICES, ADDRESS } from '../constants';
-import { SectionId } from '../types';
+import { COMPANY_NAME, SERVICES, ADDRESS } from '../constants';
 
 interface FooterProps {
   theme: 'light' | 'dark';
@@ -28,24 +27,14 @@ const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; labe
 );
 
 export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, serviceId: string) => {
-    e.preventDefault();
-    const element = document.getElementById(`service-card-${serviceId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      const servicesSection = document.getElementById(SectionId.SERVICES);
-      if (servicesSection) servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const footerLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'Services', path: '/services' },
+    { label: 'Workflow', path: '/workflow' },
+    { label: 'Portfolio', path: '/portfolio' },
+    { label: 'About Us', path: '/about' },
+    { label: 'Contact Us', path: '/contact' },
+  ];
 
   return (
     <footer className="bg-slate-950 text-slate-300 py-16 border-t border-slate-900" role="contentinfo" aria-label="Site information">
@@ -53,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
           <div className="space-y-6">
-            <a href={`#${SectionId.HOME}`} className="flex items-center gap-2 group hover:opacity-90 transition-opacity" onClick={(e) => handleNavClick(e, `#${SectionId.HOME}`)} aria-label={`${COMPANY_NAME} homepage - scroll to top of the page`}>
+            <Link to="/" className="flex items-center gap-2 group hover:opacity-90 transition-opacity" aria-label={`${COMPANY_NAME} homepage`}>
               <div className="w-8 h-8 flex items-center justify-center" aria-hidden="true">
                 <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm">
                   <defs>
@@ -69,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
                 </svg>
               </div>
               <span className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400">{COMPANY_NAME}</span>
-            </a>
+            </Link>
             <p className="text-sm leading-relaxed text-slate-400 font-medium">
               Empowering businesses through innovative software solutions. Your digital transformation partner.
             </p>
@@ -108,22 +97,21 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
             <h4 className="text-white text-xs font-black uppercase tracking-widest mb-8">Company</h4>
             <nav aria-label="Company informational links">
               <ul className="space-y-4" role="list">
-                {NAV_ITEMS.map((item) => (
+                {footerLinks.map((item) => (
                   <li key={item.label}>
-                    <a 
-                      href={item.href} 
-                      onClick={(e) => handleNavClick(e, item.href)} 
-                      aria-label={`Jump to ${item.label} section`} 
-                      className="text-sm text-slate-400 hover:text-blue-400 transition-colors font-medium"
+                    <Link 
+                      to={item.path} 
+                      aria-label={`Go to ${item.label}`} 
+                      className="text-sm text-slate-400 hover:text-blue-400 transition-colors font-medium block"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
                 <li>
                   <Link
                     to="/editorial-showcase"
-                    className="font-mono text-[10px] uppercase tracking-wider text-blue-500 hover:text-blue-400 transition-all font-black"
+                    className="font-mono text-[10px] uppercase tracking-wider text-blue-500 hover:text-blue-400 transition-all font-black block"
                   >
                     // Editorial Edition
                   </Link>
@@ -138,14 +126,13 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
               <ul className="space-y-4" role="list">
                 {SERVICES.map((service) => (
                   <li key={service.id}>
-                    <a 
-                      href={`#service-card-${service.id}`} 
-                      onClick={(e) => handleServiceClick(e, service.id)} 
+                    <Link 
+                      to="/services" 
                       aria-label={`Learn more about our ${service.title} capabilities`}
-                      className="text-sm text-slate-400 hover:text-blue-400 transition-colors font-medium"
+                      className="text-sm text-slate-400 hover:text-blue-400 transition-colors font-medium block"
                     >
                       {service.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

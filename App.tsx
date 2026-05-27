@@ -12,6 +12,12 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { AiAssistant } from './components/AiAssistant';
 import EditorialShowcase from './components/EditorialShowcase';
+import { ServicesPage } from './components/ServicesPage';
+import { PortfolioPage } from './components/PortfolioPage';
+import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
+import { WorkflowPage } from './components/WorkflowPage';
+import { ScrollToTop } from './components/ScrollToTop';
 import { SectionId } from './types';
 import { COMPANY_NAME, TAGLINE } from './constants';
 import { ArrowUp } from 'lucide-react';
@@ -113,8 +119,14 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/editorial-showcase" element={<EditorialShowcase />} />
+        <Route path="/services" element={<ServicesPage theme={theme} toggleTheme={toggleTheme} />} />
+        <Route path="/portfolio" element={<PortfolioPage theme={theme} toggleTheme={toggleTheme} />} />
+        <Route path="/about" element={<AboutPage theme={theme} toggleTheme={toggleTheme} />} />
+        <Route path="/contact" element={<ContactPage theme={theme} toggleTheme={toggleTheme} />} />
+        <Route path="/workflow" element={<WorkflowPage theme={theme} toggleTheme={toggleTheme} />} />
         <Route
           path="*"
           element={

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Home } from 'lucide-react';
-import { COMPANY_NAME, NAV_ITEMS } from '../constants';
-import { Button } from './ui/Button';
-import { SectionId } from '../types';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Sun, Moon, Home, ChevronDown } from 'lucide-react';
+import { COMPANY_NAME } from '../constants';
 
 interface HeaderProps {
   theme: 'light' | 'dark';
@@ -12,6 +11,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,15 +22,6 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
-  };
-
   // Custom Logo Component for reusability within Header
   const BrandLogo = () => (
     <div className="flex items-center gap-2">
@@ -37,13 +29,12 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm">
           <defs>
             <linearGradient id="header-logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e3a8a" /> {/* Cobalt Dark */}
-              <stop offset="50%" stopColor="#2563eb" /> {/* Cobalt Blue */}
-              <stop offset="100%" stopColor="#3b82f6" /> {/* Blue Light */}
+              <stop offset="0%" stopColor="#1e3a8a" />
+              <stop offset="50%" stopColor="#2563eb" />
+              <stop offset="100%" stopColor="#3b82f6" />
             </linearGradient>
           </defs>
           <circle cx="50" cy="50" r="42" fill="none" stroke="url(#header-logo-gradient)" strokeWidth="7" />
-          {/* Stylized 'IT' */}
           <path d="M38 32 H48 V68 H38 Z" fill="url(#header-logo-gradient)" />
           <path d="M54 32 H84 V41 H74 V68 H64 V41 H54 Z" fill="url(#header-logo-gradient)" />
         </svg>
@@ -53,6 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       </span>
     </div>
   );
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <header 
@@ -64,37 +57,100 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       role="banner"
     >
       <div className="container mx-auto px-3 xs:px-4 sm:px-6 flex items-center justify-between">
-        <a 
-          href={`#${SectionId.HOME}`}
+        <Link 
+          to="/"
           className="group hover:opacity-90 transition-opacity min-w-0" 
-          onClick={(e) => handleNavClick(e, `#${SectionId.HOME}`)}
-          aria-label={`${COMPANY_NAME} homepage - scroll to top of the page`}
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-label={`${COMPANY_NAME} homepage`}
         >
           <BrandLogo />
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 xl:gap-2" aria-label="Main site navigation">
           <ul className="flex items-center gap-1 xl:gap-2" role="list">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
-                <a 
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  aria-label={`Jump to ${item.label} section`}
-                  className="px-3 xl:px-4 py-2 rounded-full text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95"
+            <li>
+              <Link 
+                to="/"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 flex items-center justify-center ${
+                  isActive('/') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                <Home size={18} aria-label="Home" />
+              </Link>
+            </li>
+
+            {/* Services Dropdown Menu Item */}
+            <li className="relative group/dropdown">
+              <button 
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 flex items-center gap-1.5 ${
+                  isActive('/services') || isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                <span>Services</span>
+                <ChevronDown size={14} className="group-hover/dropdown:rotate-180 transition-transform duration-300" />
+              </button>
+              
+              {/* Dropdown Box */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-2 opacity-0 scale-95 pointer-events-none group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto transition-all duration-300 origin-top z-50">
+                <Link 
+                  to="/services"
+                  className={`block px-4 py-3 text-xs font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${
+                    isActive('/services') ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-slate-800/50' : 'text-slate-700 dark:text-slate-300'
+                  }`}
                 >
-                  {item.label === 'Home' ? <Home size={18} aria-label="Home" /> : item.label}
-                </a>
-              </li>
-            ))}
+                  Services Home
+                </Link>
+                <Link 
+                  to="/workflow"
+                  className={`block px-4 py-3 text-xs font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${
+                    isActive('/workflow') ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-slate-800/50' : 'text-slate-700 dark:text-slate-300'
+                  }`}
+                >
+                  Agile Workflow
+                </Link>
+              </div>
+            </li>
+
+            <li>
+              <Link 
+                to="/portfolio"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 ${
+                  isActive('/portfolio') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                Portfolio
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/about"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 ${
+                  isActive('/about') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                About Us
+              </Link>
+            </li>
+
+            <li>
+              <Link 
+                to="/contact"
+                className={`px-3 xl:px-4 py-2 rounded-full text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/80 dark:hover:bg-slate-800 transition-all duration-300 active:scale-95 ${
+                  isActive('/contact') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                Contact Us
+              </Link>
+            </li>
           </ul>
           
           <div className="ml-2 pl-2 border-l border-slate-200 dark:border-slate-700 flex items-center gap-2">
              <button
               onClick={toggleTheme}
               className="p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:rotate-12"
-              aria-label={theme === 'dark' ? 'Switch to light visual mode' : 'Switch to dark visual mode'}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
              >
                 {theme === 'dark' ? <Sun size={20} aria-hidden="true" /> : <Moon size={20} aria-hidden="true" />}
              </button>
@@ -127,25 +183,95 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       {isMobileMenuOpen && (
         <div 
           id="mobile-navigation"
-          className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-2 duration-300"
+          className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-2 duration-300 overflow-y-auto max-h-[85vh] no-scrollbar"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation overlay"
         >
           <nav className="flex flex-col gap-2">
             <ul className="flex flex-col gap-2" role="list">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.label}>
-                  <a 
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href)}
-                    aria-label={`Jump to ${item.label} section`}
-                    className="px-4 py-3 rounded-lg text-lg font-medium text-slate-800 dark:text-slate-100 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block"
+              <li>
+                <Link 
+                  to="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
+                >
+                  Home
+                </Link>
+              </li>
+
+              {/* Mobile Services Accordion */}
+              <li>
+                <button 
+                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                  className="w-full px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 flex items-center justify-between text-left text-slate-800 dark:text-slate-100"
+                >
+                  <span>Services</span>
+                  <ChevronDown size={18} className={`transition-transform duration-300 ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Accordion Sub-list */}
+                <div className={`pl-6 overflow-hidden transition-all duration-300 ${
+                  isMobileServicesOpen ? 'max-h-40 opacity-100 py-1' : 'max-h-0 opacity-0 pointer-events-none'
+                }`}>
+                  <Link 
+                    to="/services"
+                    onClick={() => { setIsMobileMenuOpen(false); }}
+                    className={`block px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all ${
+                      isActive('/services') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300'
+                    }`}
                   >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
+                    Services Home
+                  </Link>
+                  <Link 
+                    to="/workflow"
+                    onClick={() => { setIsMobileMenuOpen(false); }}
+                    className={`block px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all ${
+                      isActive('/workflow') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-300'
+                    }`}
+                  >
+                    Agile Workflow
+                  </Link>
+                </div>
+              </li>
+
+              <li>
+                <Link 
+                  to="/portfolio"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/portfolio') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
+                >
+                  Portfolio
+                </Link>
+              </li>
+
+              <li>
+                <Link 
+                  to="/about"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/about') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
+                >
+                  About Us
+                </Link>
+              </li>
+
+              <li>
+                <Link 
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 block ${
+                    isActive('/contact') ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/30 dark:bg-slate-800/30' : 'text-slate-800 dark:text-slate-100'
+                  }`}
+                >
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

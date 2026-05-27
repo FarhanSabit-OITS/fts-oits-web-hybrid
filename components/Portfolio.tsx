@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ExternalLink, Tag, Clock, CheckCircle, RotateCcw, Filter, Eye, ChevronRight, X, Target, Settings, BarChart, Twitter, Linkedin, Facebook, Play, BookOpen } from 'lucide-react';
+import { ExternalLink, Tag, Clock, CheckCircle, RotateCcw, Filter, Eye, ChevronRight, X, Target, Settings, BarChart, Twitter, Linkedin, Facebook, Play, BookOpen, SlidersHorizontal } from 'lucide-react';
 import { PROJECTS, COMPANY_NAME } from '../constants';
 import { SectionId, Project } from '../types';
 
@@ -201,6 +201,8 @@ export const Portfolio: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 888);
   const sectionRef = useRef<HTMLElement>(null);
 
   const categories = ['All', ...new Set(PROJECTS.map(p => p.category))];
@@ -226,118 +228,289 @@ export const Portfolio: React.FC = () => {
   const filteredProjects = PROJECTS.filter(p => (filter === 'All' || p.category === filter) && (statusFilter === 'All' || p.status === statusFilter));
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 888);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.disconnect(); } }, { threshold: 0.1 });
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  // Responsive Left Sidebar or Mobile drawer component helper
+  const FilterPanelContent = () => (
+    <div className="space-y-10">
+      <div className="flex flex-col gap-3">
+        <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] flex items-center gap-2">
+          <Filter size={12} /> Categories
+        </span>
+        <div className="flex flex-col gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => applyFilter('cat', cat)}
+              className={`w-full group px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] transition-all duration-300 flex items-center justify-between active:scale-95 border ${
+                filter === cat 
+                  ? 'bg-slate-950 text-white dark:bg-blue-600 border-slate-950 dark:border-blue-600 shadow-xl' 
+                  : 'bg-white dark:bg-slate-900 text-slate-500 hover:text-slate-950 dark:hover:text-white border-slate-200 dark:border-slate-800'
+              }`}
+            >
+              <span className="truncate">{cat}</span>
+              <span className={`px-2 py-0.5 rounded font-mono text-[9px] min-w-[20px] text-center font-black ${
+                filter === cat ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+              }`}>{getCategoryCount(cat)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] flex items-center gap-2">
+          <CheckCircle size={12} /> Status
+        </span>
+        <div className="flex flex-col gap-2">
+          {statuses.map((stat) => (
+            <button
+              key={stat}
+              onClick={() => applyFilter('stat', stat)}
+              className={`w-full group px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] transition-all duration-300 flex items-center justify-between active:scale-95 border ${
+                statusFilter === stat 
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-xl' 
+                  : 'bg-white dark:bg-slate-900 text-slate-500 hover:text-slate-950 dark:hover:text-white border-slate-200 dark:border-slate-800'
+              }`}
+            >
+              <span>{stat}</span>
+              <span className={`px-2 py-0.5 rounded font-mono text-[9px] min-w-[20px] text-center font-black ${
+                statusFilter === stat ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+              }`}>{getStatusCount(stat)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {(filter !== 'All' || statusFilter !== 'All') && (
+        <button 
+          onClick={resetFilters} 
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-100 dark:hover:bg-red-900/40 border border-transparent hover:border-red-200 dark:hover:border-red-900 transition-all"
+        >
+          <RotateCcw size={12} /> Clear Filters
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <section ref={sectionRef} id={SectionId.PORTFOLIO} className="py-32 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative overflow-hidden">
       <div className="container mx-auto px-6">
+        
+        {/* Title and Subtitle */}
         <div className={`flex flex-col lg:flex-row justify-between items-end mb-20 gap-8 transition-all duration-1000 transform-gpu ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           <div className="max-w-2xl">
             <h2 className="text-sm font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Our Portfolio</h2>
             <h3 className="text-4xl md:text-6xl font-black text-slate-950 dark:text-white tracking-tighter leading-tight">Engineering excellence in every pixel.</h3>
           </div>
-          
-          <div className="flex flex-col gap-6 w-full lg:w-auto">
-            <div className="flex flex-wrap gap-2">
-              <span className="w-full text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1 flex items-center gap-2"><Filter size={12} /> Categories</span>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => applyFilter('cat', cat)}
-                  className={`group px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] transition-all duration-300 flex items-center gap-1.5 sm:gap-2 active:scale-95 ${filter === cat ? 'bg-slate-950 text-white dark:bg-blue-600 shadow-xl' : 'bg-white dark:bg-slate-900 text-slate-500 hover:text-slate-950 dark:hover:text-white border border-slate-200 dark:border-slate-800'}`}
-                >
-                  {cat}
-                  <span className={`px-1.5 py-0.5 rounded-md text-[8px] sm:text-[9px] min-w-[18px] sm:min-w-[20px] text-center font-black ${filter === cat ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600'}`}>{getCategoryCount(cat)}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <span className="w-full text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1 flex items-center gap-2"><CheckCircle size={12} /> Status</span>
-              {statuses.map((stat) => (
-                <button
-                  key={stat}
-                  onClick={() => applyFilter('stat', stat)}
-                  className={`group px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] transition-all duration-300 flex items-center gap-1.5 sm:gap-2 active:scale-95 ${statusFilter === stat ? 'bg-blue-600 text-white shadow-xl' : 'bg-white dark:bg-slate-900 text-slate-500 hover:text-slate-950 dark:hover:text-white border border-slate-200 dark:border-slate-800'}`}
-                >
-                  {stat}
-                  <span className={`px-1.5 py-0.5 rounded-md text-[8px] sm:text-[9px] min-w-[18px] sm:min-w-[20px] text-center font-black ${statusFilter === stat ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600'}`}>{getStatusCount(stat)}</span>
-                </button>
-              ))}
-              {(filter !== 'All' || statusFilter !== 'All') && (
-                <button onClick={resetFilters} className="flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:bg-red-100 transition-all"><RotateCcw size={12} /> Clear</button>
-              )}
-            </div>
-          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 min-h-[400px]">
-          {isFiltering ? (
-            Array(3).fill(0).map((_, i) => <SkeletonCard key={i} />)
-          ) : filteredProjects.length > 0 ? (
-            filteredProjects.map((project, index) => (
-              <div 
-                key={project.id}
-                className={`group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] transform-gpu animate-in fade-in slide-in-from-bottom-4`}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className="aspect-video overflow-hidden relative cursor-pointer" onClick={() => setSelectedProject(project)}>
-                  <img src={project.imageUrl} alt={project.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:blur-[2px]" />
-                  <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/80 transition-all duration-500 backdrop-blur-none group-hover:backdrop-blur-sm flex flex-col items-center justify-center p-8 opacity-0 group-hover:opacity-100 z-10">
-                    <div className="transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-100 text-center w-full">
-                      <p className="text-white text-sm font-bold mb-6 drop-shadow-xl">{project.description}</p>
-                      <div className="flex flex-col items-center gap-4">
-                        <button className="flex items-center gap-3 px-8 py-3 bg-white text-slate-950 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
-                          <Eye size={16} /> Details {project.demoVideoUrl && <Play size={14} className="ml-1 fill-current" />}
-                        </button>
-                        {project.caseStudyUrl && (
-                          <a 
-                            href={project.caseStudyUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="flex items-center gap-3 px-8 py-3 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <BookOpen size={16} /> Case Study
-                          </a>
-                        )}
-                        <ShareButtons project={project} />
+        {isLargeScreen ? (
+          /* Sidebar Layout for screen widths >= 888px */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Sidebar Filter Column */}
+            <aside className="lg:col-span-3 bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800/80 shadow-md sticky top-32 z-10 transition-colors">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white flex items-center gap-2">
+                  <SlidersHorizontal size={16} className="text-blue-600 dark:text-blue-400" /> Filters
+                </span>
+                <span className="font-mono text-[10px] text-slate-400 font-bold uppercase tracking-wider">// SYSTEM</span>
+              </div>
+              <FilterPanelContent />
+            </aside>
+
+            {/* Right Project Card Grid Column */}
+            <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+              {isFiltering ? (
+                Array(3).fill(0).map((_, i) => <SkeletonCard key={i} />)
+              ) : filteredProjects.length > 0 ? (
+                filteredProjects.map((project, index) => (
+                  <div 
+                    key={project.id}
+                    className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] transform-gpu animate-in fade-in slide-in-from-bottom-4"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <div className="aspect-video overflow-hidden relative cursor-pointer" onClick={() => setSelectedProject(project)}>
+                      <img src={project.imageUrl} alt={project.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:blur-[2px]" />
+                      <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/80 transition-all duration-500 backdrop-blur-none group-hover:backdrop-blur-sm flex flex-col items-center justify-center p-8 opacity-0 group-hover:opacity-100 z-10">
+                        <div className="transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-100 text-center w-full">
+                          <p className="text-white text-sm font-bold mb-6 drop-shadow-xl">{project.description}</p>
+                          <div className="flex flex-col items-center gap-4">
+                            <button className="flex items-center gap-3 px-8 py-3 bg-white text-slate-950 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
+                              <Eye size={16} /> Details {project.demoVideoUrl && <Play size={14} className="ml-1 fill-current" />}
+                            </button>
+                            {project.caseStudyUrl && (
+                              <a 
+                                href={project.caseStudyUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex items-center gap-3 px-8 py-3 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <BookOpen size={16} /> Case Study
+                              </a>
+                            )}
+                            <ShareButtons project={project} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="absolute top-6 left-6 transition-opacity group-hover:opacity-0">
+                        <span className="px-4 py-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 shadow-xl border border-white/10">
+                          {project.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-8">
+                      <div className="flex justify-between items-start mb-6">
+                        <h4 className="text-xl font-black text-slate-950 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer line-clamp-1" onClick={() => setSelectedProject(project)}>{project.title}</h4>
+                        <div className="flex items-center gap-1.5 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full border border-green-100 dark:border-green-800/50 shrink-0">
+                          <span className="text-[9px] font-black uppercase text-green-700 dark:text-green-300">{project.status}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {project.technologies?.slice(0, 3).map(tech => (
+                          <span key={tech} className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">{tech}</span>
+                        ))}
+                      </div>
+                      <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center gap-2 text-slate-500 text-[10px] font-black uppercase tracking-wider"><Clock size={14} /> {project.duration || '3-4 Months'}</div>
+                        <button onClick={() => setSelectedProject(project)} className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest hover:underline flex items-center gap-1">View <ChevronRight size={14} /></button>
                       </div>
                     </div>
                   </div>
-                  <div className="absolute top-6 left-6 transition-opacity group-hover:opacity-0">
-                    <span className="px-4 py-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 shadow-xl border border-white/10">
-                      {project.category}
-                    </span>
-                  </div>
-                </div>
+                ))
+              ) : (
+                <div className="col-span-full py-20 text-center"><p className="text-slate-500 text-lg font-bold">No projects matching your search.</p></div>
+              )}
+            </div>
+          </div>
+        ) : (
+          /* Mobile Viewport Custom UI/UX (< 888px): Horizontal Sliding pills + Floating sheet */
+          <div className="space-y-8">
+            {/* Sliding pills category selection */}
+            <div className="w-full relative">
+              <span className="text-[9px] font-black uppercase text-slate-400 tracking-[0.2em] mb-2 block flex items-center gap-2"><Filter size={12} /> Category Quick Tray</span>
+              <div 
+                className="flex gap-2 overflow-x-auto no-scrollbar pb-3 touch-action: 'pan-x'" 
+                style={{ WebkitOverflowScrolling: 'touch' }}
+              >
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => applyFilter('cat', cat)}
+                    className={`px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.1em] transition-all duration-300 flex items-center gap-1.5 shrink-0 active:scale-95 border ${
+                      filter === cat 
+                        ? 'bg-slate-950 text-white dark:bg-blue-600 border-slate-950 dark:border-blue-600 shadow-lg' 
+                        : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    <span className={`px-1 rounded text-[8px] font-bold ${filter === cat ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>{getCategoryCount(cat)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                <div className="p-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <h4 className="text-2xl font-black text-slate-950 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer" onClick={() => setSelectedProject(project)}>{project.title}</h4>
-                    <div className="flex items-center gap-1.5 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full border border-green-100 dark:border-green-800/50">
-                      <span className="text-[9px] font-black uppercase text-green-700 dark:text-green-300">{project.status}</span>
+            {/* Mobile Project Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[300px]">
+              {isFiltering ? (
+                Array(2).fill(0).map((_, i) => <SkeletonCard key={i} />)
+              ) : filteredProjects.length > 0 ? (
+                filteredProjects.map((project, index) => (
+                  <div 
+                    key={project.id}
+                    className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 shadow-sm"
+                  >
+                    <div className="aspect-video overflow-hidden relative cursor-pointer" onClick={() => setSelectedProject(project)}>
+                      <img src={project.imageUrl} alt={project.title} loading="lazy" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-slate-950/60 flex flex-col justify-end p-6">
+                        <span className="absolute top-4 left-4 px-3 py-1 bg-blue-600/90 text-white text-[9px] font-black uppercase tracking-widest rounded-full">
+                          {project.category}
+                        </span>
+                        <h4 className="text-lg font-black text-white mb-2 leading-tight">{project.title}</h4>
+                        <p className="text-[11px] text-slate-200 line-clamp-1">{project.description}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-6 flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-1"><Clock size={12} /> {project.duration || '3-4 Months'}</span>
+                      <button onClick={() => setSelectedProject(project)} className="text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-0.5">Details <ChevronRight size={12} /></button>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2.5 mb-8">
-                    {project.technologies?.slice(0, 3).map(tech => (
-                      <span key={tech} className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">{tech}</span>
-                    ))}
+                ))
+              ) : (
+                <div className="col-span-full py-16 text-center"><p className="text-slate-500 text-sm font-bold">No projects matching your search.</p></div>
+              )}
+            </div>
+
+            {/* Mobile Sticky/Floating Filter Action Button */}
+            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
+              <button
+                onClick={() => setIsMobileDrawerOpen(true)}
+                className="flex items-center gap-2.5 px-6 py-4 bg-slate-950 dark:bg-blue-600 text-white rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:scale-105 active:scale-95 transition-transform border border-white/10 scale-100"
+              >
+                <SlidersHorizontal size={14} />
+                <span>Filter Options</span>
+                {(filter !== 'All' || statusFilter !== 'All') && (
+                  <span className="w-5 h-5 rounded-full bg-white dark:bg-slate-900 text-slate-950 dark:text-white text-[9px] font-black flex items-center justify-center font-mono">!</span>
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Filter Bottom Drawer Modal */}
+            {isMobileDrawerOpen && (
+              <div className="fixed inset-0 z-50 flex items-end justify-center animate-in fade-in duration-300">
+                <div 
+                  className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
+                  onClick={() => setIsMobileDrawerOpen(false)}
+                  aria-hidden="true"
+                />
+                
+                <div className="relative w-full max-h-[80vh] bg-white dark:bg-slate-900 rounded-t-[2.5rem] border-t border-slate-200 dark:border-slate-800 shadow-2xl p-8 overflow-y-auto no-scrollbar animate-in slide-in-from-bottom duration-500 ease-out z-10">
+                  <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-6" onClick={() => setIsMobileDrawerOpen(false)} />
+                  <div className="flex justify-between items-center mb-8 pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white flex items-center gap-2">
+                      <SlidersHorizontal size={14} /> Filter Matrices
+                    </span>
+                    <button 
+                      onClick={() => setIsMobileDrawerOpen(false)}
+                      className="p-1.5 text-slate-500 hover:text-slate-950 dark:hover:text-white transition-colors"
+                      aria-label="Close filters panel"
+                    >
+                      <X size={18} />
+                    </button>
                   </div>
-                  <div className="flex items-center justify-between pt-8 border-t border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2 text-slate-500 text-[10px] font-black uppercase tracking-wider"><Clock size={14} /> {project.duration || '3-4 Months'}</div>
-                    <button onClick={() => setSelectedProject(project)} className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest hover:underline flex items-center gap-1">View <ChevronRight size={14} /></button>
+                  
+                  <div className="pb-20">
+                    <FilterPanelContent />
+                  </div>
+
+                  {/* Sticky Mobile Apply Button */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-white/90 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900/90 border-t border-slate-100 dark:border-slate-800/80">
+                    <button
+                      onClick={() => setIsMobileDrawerOpen(false)}
+                      className="w-full py-4 bg-slate-950 dark:bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl hover:bg-slate-900 transition-colors"
+                    >
+                      Apply Selection
+                    </button>
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="col-span-full py-20 text-center"><p className="text-slate-500 text-lg font-bold">No projects matching your search.</p></div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
+
       </div>
       {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </section>
