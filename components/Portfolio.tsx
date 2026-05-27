@@ -304,7 +304,7 @@ export const Portfolio: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} id={SectionId.PORTFOLIO} className="py-32 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative overflow-hidden">
+    <section ref={sectionRef} id={SectionId.PORTFOLIO} className="py-32 bg-slate-50 dark:bg-swiss-black transition-colors duration-300 relative overflow-hidden">
       <div className="container mx-auto px-6">
         
         {/* Title and Subtitle */}

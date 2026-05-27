@@ -34,7 +34,7 @@ export const Process: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id={SectionId.PROCESS} className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+    <section ref={sectionRef} id={SectionId.PROCESS} className="py-24 bg-slate-50 dark:bg-swiss-black relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Our Workflow</h2>
