@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Contact } from './Contact';
+import { Testimonials } from './Testimonials';
 import { AiAssistant } from './AiAssistant';
 import { Mail, Terminal } from 'lucide-react';
 
@@ -42,6 +43,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ theme, toggleTheme }) 
 
         {/* Embedded Contact section */}
         <Contact />
+
+        {/* Embedded Testimonials section */}
+        <Testimonials />
       </main>
 
       <Footer theme={theme} toggleTheme={toggleTheme} />

@@ -2,8 +2,10 @@ import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Portfolio } from './Portfolio';
+import { Testimonials } from './Testimonials';
 import { AiAssistant } from './AiAssistant';
-import { Briefcase, Terminal } from 'lucide-react';
+import { Briefcase, Terminal, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface PortfolioPageProps {
   theme: 'light' | 'dark';
@@ -42,6 +44,27 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ theme, toggleTheme
 
         {/* Embedded Portfolio section */}
         <Portfolio />
+
+        {/* Embedded Testimonials section */}
+        <Testimonials />
+
+        {/* Editorial CTA Section */}
+        <section className="py-24 border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-swiss-black transition-colors duration-300">
+          <div className="container mx-auto px-6 text-center space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <h2 className="text-sm font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">// START YOUR METRICS DISRUPTION</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-slate-950 dark:text-white tracking-tighter leading-tight max-w-4xl mx-auto">
+              Ready to build something uncompromisingly fast?
+            </h3>
+            <p className="text-slate-600 dark:text-swiss-muted max-w-xl mx-auto font-medium text-base sm:text-lg">
+              Get in touch with our engineering strategists today for a free architecture review and roadmap.
+            </p>
+            <div className="pt-4">
+              <Link to="/contact" className="inline-flex items-center gap-3 px-8 py-4 bg-slate-950 dark:bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl hover:shadow-2xl dark:hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                GET A FREE ESTIMATE <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer theme={theme} toggleTheme={toggleTheme} />
